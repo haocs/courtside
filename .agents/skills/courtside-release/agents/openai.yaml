@@ -1,0 +1,4 @@
+interface:
+  display_name: "Courtside Release"
+  short_description: "Publish and verify a Courtside component release"
+  default_prompt: "Use $courtside-release to release and deploy the requested Courtside component."

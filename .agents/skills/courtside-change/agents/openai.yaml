@@ -1,0 +1,4 @@
+interface:
+  display_name: "Courtside Change"
+  short_description: "Route and validate Courtside component changes"
+  default_prompt: "Use $courtside-change to make and validate this Courtside change."

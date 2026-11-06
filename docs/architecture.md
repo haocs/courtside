@@ -1,0 +1,63 @@
+# Architecture
+
+## Running system
+
+```mermaid
+flowchart LR
+    Phone[Phone or camera] --> Originals[Private originals on storage]
+    OriginalScan[Input scanner] --> Server[Processing server / NAS container]
+    Originals --> OriginalScan
+    Server <-->|Metadata, leases and artifact references| Worker[Independent video worker / compute machine]
+    Originals -->|Read| Worker
+    Worker -->|Write once| Stage[Staging on published storage filesystem]
+    Stage -->|Server validates and activates| Library[Published media and manifests]
+    Browser[LAN mobile / desktop browser] --> Proxy[Local NAS reverse proxy]
+    Proxy --> Web[Website / NAS container]
+    Proxy --> Server
+    Library -->|Read only| Web
+    Web --> WebState[Separate website state]
+    Web <-->|Separate role queues| Coach[Render worker and AI worker / compute machine]
+    Coach <-->|Declared artifacts and pinned evidence| Artifacts[Separate coaching artifact storage]
+    Artifacts -->|Read only| Web
+    Coach -. Explicit requested coaching only .-> Provider[External AI provider]
+```
+
+The processing server and viewing website are independent services and databases. Website coaching queues are separate from the video-processing queue. The render and AI roles are also independently runnable. Changing a player control does not require reinstalling the video worker.
+
+The current website reads published manifests and processing status metadata. It is **not** a general client of an already-built research registry in the processing server. That registry and a future comparison/evaluation control plane remain proposals.
+
+## Responsibility and write boundary
+
+| Component | Reads | Writes / authority |
+| --- | --- | --- |
+| Video worker | Private originals and assigned metadata; local models/caches | Local checkpoints and runtime state; result staging. Server owns leases, retries and activation. |
+| Processing server | Originals and staged results | Task/attempt/event history; worker status; validated activation into the library. |
+| Website | Allowlisted committed library/media; declared coaching artifacts | Its own preferences, entities, Moments, coaching records and role queues. No write access to published video files is needed. |
+| Coaching render/AI workers | Assigned published media/evidence through configured mounts | Dedicated coaching artifact storage and role-local state. No video-processing publication authority. |
+| Algorithm lab | Specifications and, later, explicitly approved private evaluation inputs | Current repository is documentation; proposed benchmark/experiment outputs are not serving publications. |
+
+Storage IDs and relative artifact paths cross APIs; actual filesystem roots are private installation configuration. A media reference is a locator plus optional digest/size, not proof of ownership. Validate roots, path traversal, symlinks and declared artifacts in the owner implementation.
+
+## Processing lifecycle
+
+The worker claims a lease, stages the source locally and executes:
+
+`acquire_source → verify_source → prepare_proxy → analyze → process → package_result → upload_result`
+
+`process` includes rendering, joining and verification. Stage checkpoints are local and fingerprinted by source/build/model/settings. The server stores durable task history and small status mirrors; a cached local assignment never grants ownership after a lease expires.
+
+- **process:** render/package/upload a result; activation is a separate server decision.
+- **dryrun:** create media locally and report findings/timings; do not upload result media or checkpoint blobs to NAS. Server records and small status mirrors still update.
+- **experiment:** isolated parameters/results using the existing executor. It is not proof of a training, prediction-only evaluation or cache-reuse implementation.
+
+Initial automatic results can activate only under the configured publication policy. Manual reruns default to no automatic activation. Keep failed attempts and provenance; a rerun is a new task, not a rewrite of old evidence.
+
+Staging and publication share a filesystem so activation can rename rather than recopy large media. Commit manifests last. Validate metadata, checksums and publication intent before the website can discover a result. Do not publish an intermediate render merely because its file exists.
+
+## Deployment boundary
+
+Containers run on the NAS; workers run on independent compute machines. Worker installation is editor-independent and must survive closing an IDE. Mac is the validated video-processing target; Windows remains a portability target with gaps documented by the components.
+
+Use a LAN-restricted reverse proxy. Container filesystem permissions are the container's permissions, not each visitor's NAS account permissions. The website does not automatically receive visitor identity or enforce per-user DSM folder rules. See [deployment](deployment.md) before changing exposure.
+
+The NAS coordinates and stores. Heavy video inference/rendering and any future model training belong on worker hardware. Keep originals, served artifacts, coaching artifacts and mutable application state separate even when they share a physical NAS.
