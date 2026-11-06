@@ -33,6 +33,7 @@ The current website reads published manifests and processing status metadata. It
 | Video worker | Private originals and assigned metadata; local models/caches | Local checkpoints and runtime state; result staging. Server owns leases, retries and activation. |
 | Processing server | Originals and staged results | Task/attempt/event history; worker status; validated activation into the library. |
 | Website | Allowlisted committed library/media; declared coaching artifacts | Its own preferences, entities, Moments, coaching records and role queues. No write access to published video files is needed. |
+| Browser playback assistance | Served video frames and bundled detector assets | Optional, ephemeral Auto focus framing. No frame uploads, publication authority, worker jobs or automatic annotation writes. |
 | Coaching render/AI workers | Assigned published media/evidence through configured mounts | Dedicated coaching artifact storage and role-local state. No video-processing publication authority. |
 | Algorithm lab | Specifications and, later, explicitly approved private evaluation inputs | Current repository is documentation; proposed benchmark/experiment outputs are not serving publications. |
 
@@ -60,4 +61,6 @@ Containers run on the NAS; workers run on independent compute machines. Worker i
 
 Use a LAN-restricted reverse proxy. Container filesystem permissions are the container's permissions, not each visitor's NAS account permissions. The website does not automatically receive visitor identity or enforce per-user DSM folder rules. See [deployment](deployment.md) before changing exposure.
 
-The NAS coordinates and stores. Heavy video inference/rendering and any future model training belong on worker hardware. Keep originals, served artifacts, coaching artifacts and mutable application state separate even when they share a physical NAS.
+The NAS coordinates and stores. Heavy video inference/rendering and any future model training belong on worker hardware. Optional desktop [Auto focus](https://github.com/haocs/tennis-web/blob/main/docs/AUTO-FOCUS.md) performs bounded playback detection in a browser Web Worker using locally served runtime/model assets. Graphics capabilities belong to each visitor's browser and are checked there; unsupported browser ports retain ordinary playback. Auto focus does not run inference on the NAS, change the processing queue or generate Moments/training annotations. Select-and-follow and persisted detection outputs remain future work.
+
+Keep originals, served artifacts, coaching artifacts and mutable application state separate even when they share a physical NAS.

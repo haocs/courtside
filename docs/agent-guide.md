@@ -38,6 +38,8 @@ Use component CLIs for worker status/restarts, and the existing deployment route
 
 ## A self-contained handoff
 
+For an explicitly requested coordinator/implementation-agent workflow, follow [agent collaboration](agent-collaboration.md), including file-based progress and review before a batch deployment.
+
 Record the following in a private task handoff when necessary:
 
 - User goal, accepted decisions and outstanding questions.
