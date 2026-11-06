@@ -35,6 +35,8 @@ Write a temporary file and rename it to publish complete JSON atomically. The co
 
 A stale report means **activity unconfirmed**, not success or failure. Corroborate it with commits, working-tree changes and CI. Do not repeatedly open the application just because the report is stale, fabricate a heartbeat, or overwrite the implementer's status. Report a genuine blocker rather than pretending a completed chat will keep monitoring.
 
+If completion reporting stalls, the coordinator can record an explicit ownership handoff within the operator's authorized scope. Preserve the implementer's checkout and verify the base revision and file hashes when taking a snapshot into a separate review checkout. Notify the implementer that publication has transferred so it does not submit a competing release or duplicate PR.
+
 ## Review and release once
 
 Check issue acceptance, complete diff, attribution, privacy and real test evidence. Request fixes through the agreed inbox or PR; do not implement competing fixes in the same files without an explicit ownership handoff. Keep screenshots and operational logs private unless independently sanitized.
