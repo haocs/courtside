@@ -116,6 +116,10 @@ python3.12 -m venv "$COURTSIDE_PRIVATE/dev/coach-env"
 
 Read [the worker README](https://github.com/haocs/tennis-web/blob/main/worker/README.md) for its required local dependencies/private setup. Render and AI roles have separate processes and state. Development does not require contacting a provider: use synthetic fixtures and mocks. Do not run an AI-role process against a real queue just to check UI behavior.
 
+The render role also handles sharing downloads through an explicit export profile. Keep its video/audio/quality checks separate from coaching evidence generation. Preserve the original-time selection and frozen crop/speed recipe; changing the current UI selection must not relabel an earlier job's result. Exercise delayed responses and close/reopen behavior with mocks.
+
+Website and worker updates can have different compatibility requirements. A sharing job requires a renderer advertising `share-export-v1`; an older worker must leave it unclaimed. Install companion worker updates from the reviewed component revision into the existing independent runtime. Keep private configuration, local recovery state and service identity; do not turn a development checkout or NAS media folder into the installed worker.
+
 ## Algorithm lab and this hub
 
 Both are currently documentation-first repositories; do not invent an npm/Python build for them. Validate equations/examples, status claims, cross-links and privacy. When executable evaluation work is introduced, give it a deliberate component-owned runtime and test contract.

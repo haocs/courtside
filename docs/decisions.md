@@ -9,6 +9,7 @@ Reviewed against the [source snapshot](repositories.md#reviewed-source-snapshot)
 | APIs carry state/metadata and artifact references, not media blobs | Implemented processing contract. Worker stages/uploads; server validates/activates. |
 | Server-owned leases and durable task/attempt history | Implemented. Cached worker state is resumable context, not scheduling authority. |
 | Separate coaching render/AI queues from video-processing queue | Implemented website/worker boundary. Do not merge these to reuse a worker name. |
+| Separate coaching preparation from sharing-download profiles | The website's render role creates purpose-specific artifacts with explicit worker capabilities. Sharing downloads do not start AI, become coaching evidence or create serving Video versions. |
 | Session / Video / version / Clip / Moment have distinct meanings | Implemented serving model. Compatibility API names can predate it. |
 | Moment anchors survive reprocessing; cut/usefulness judgments are output-bound | Implemented model; keep any future remapping explicit and evidence-based. |
 | Up/down are exclusive player reactions, outside the moment panel | Implemented website behavior. Down stays entity metadata; revisions are retained. |

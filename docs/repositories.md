@@ -13,11 +13,11 @@ Related web contracts: [published sessions](https://github.com/haocs/tennis-web/
 
 ## Reviewed source snapshot
 
-Initial documentation review: **2026-11-05**. Website source re-reviewed **2026-11-06** for browser-local Auto focus; other component baselines remain unchanged. These are public source baselines, not a deployment inventory or an instruction to pin all future work to old code.
+Initial documentation review: **2026-11-05**. Website source re-reviewed **2026-11-07** for Clip study, sharing exports, Moments and player diagnostics; other component baselines remain unchanged. These are public source baselines, not a deployment inventory or an instruction to pin all future work to old code.
 
 | Component | Reviewed main revision |
 | --- | --- |
-| tennis-web | [ea3b287e01888bca88f4990485e88d25e98ea983](https://github.com/haocs/tennis-web/commit/ea3b287e01888bca88f4990485e88d25e98ea983) |
+| tennis-web | [a1d03cf7dc28e737fdca9cac34383bfff5ddd3b7](https://github.com/haocs/tennis-web/commit/a1d03cf7dc28e737fdca9cac34383bfff5ddd3b7) |
 | tennis-processing | [810690b29df1826f5f144fd8c0882f7938155281](https://github.com/haocs/tennis-processing/commit/810690b29df1826f5f144fd8c0882f7938155281) |
 | tennis-processing-server | [3db34a89676a174d72cf68d8b455203785d6fa44](https://github.com/haocs/tennis-processing-server/commit/3db34a89676a174d72cf68d8b455203785d6fa44) |
 | tennis-algorithm-lab | [7ee67d82d4a21d3ce14965278e92414f0c777d22](https://github.com/haocs/tennis-algorithm-lab/commit/7ee67d82d4a21d3ce14965278e92414f0c777d22) |

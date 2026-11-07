@@ -53,6 +53,8 @@ Keep backup paths and contents out of this public repository. Do not mutate the 
 
 ## NAS image switch
 
+Check the component's release notes for companion coaching/media-worker upgrades before switching the website. A new export profile can require a newer renderer even when the website state schema is unchanged. Preserve the worker's private configuration, local journals, artifact references and existing role services; use a reviewed source revision and the component's installation procedure. Keep the video-processing worker and its queue untouched. Capability-gated jobs should remain unclaimed by incompatible workers, not be forced through the old renderer. Verify the applicable role/capability after upgrade without starting a real provider call merely to test deployment.
+
 Preserve project/service names, data volume/bind identity, read-only library/artifact mounts, environment settings, user/group settings and reverse-proxy configuration. Change only what the release requires. NAS runtime directories contain deployment settings/state/media, not a development checkout.
 
 With an already configured private Compose project, the normal image update is:
