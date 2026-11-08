@@ -37,3 +37,5 @@ Courtside owns cross-repository architecture, operating boundaries and onboardin
 Component releases remain independent. This repository has no application build, container image, worker service or automatic deployment.
 
 Private installation settings stay outside all public checkouts. A new agent should discover the operator's chosen private configuration through the operator, not through committed machine-specific defaults.
+
+The approved cut-review design now has [unreleased implementation PRs and cross-component contracts](docs/CUT-REVIEW-IMPLEMENTATION.md). Review that status before using the proposed integration or preparing a rollout.

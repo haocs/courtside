@@ -1,6 +1,6 @@
 # Review cut — design for issue #77
 
-- **Status**: Approved for staged implementation. Antigravity draft, revised after coordinator review and final corrections. Endpoint/schema additions below remain proposed until their owning component implements and verifies them; this document does not deploy them.
+- **Status**: Approved; implemented in unreleased component PRs. See [implementation status and exact contracts](CUT-REVIEW-IMPLEMENTATION.md). Antigravity draft, revised after coordinator review and final corrections. Endpoint/schema additions below remain proposed until their owning component implements and verifies them; this document does not deploy them.
 - **Examples**: All example recordings, court labels, times, hashes and identifiers are synthetic.
 - **Target Issue**: [`haocs/tennis-web#77` — review cut](https://github.com/haocs/tennis-web/issues/77)
 - **Reviewed Baselines**:
