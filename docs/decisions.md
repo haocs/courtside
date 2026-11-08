@@ -17,7 +17,8 @@ Reviewed against the [source snapshot](repositories.md#reviewed-source-snapshot)
 | Shared LAN website state; no extra website accounts | Current behavior. A NAS login/reverse proxy does not automatically imply SSO or per-visitor filesystem filtering. |
 | Preserve metadata and HDR semantics through processing | Implemented capture/property snapshot and validation, with documented dynamic-metadata limitations. Keep originals authoritative. |
 | Improve detection through signals, temporal rules and measurement before training | Accepted direction. The lab's candidate/benchmark design is still largely proposed. |
-| Automatic experimental TTL/pins/cleanup, research registry and training executors | Proposed, not operational guarantees. Do not delete artifacts based on these plans. |
+| Cut review, diagnostic hints, confirmed reruns and version comparison | [Approved for staged implementation](REVIEW-CUT-DESIGN.md). Reviews are evidence; only separately confirmed commands affect candidate recuts. Component endpoints remain proposals until implemented. |
+| Automatic experimental TTL/pins/cleanup, research registry and training executors | Retention/reference protection is included in the approved cut-review design, with automatic cleanup disabled by default. The broad research registry and training executors remain proposals. Do not delete artifacts based on design documents. |
 
 ## Resolving the lab storage proposal
 

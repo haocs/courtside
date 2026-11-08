@@ -13,6 +13,7 @@ This repository contains **documentation and agent instructions only**. Applicat
 | New human contributor | [Development setup](docs/development.md) |
 | New coding agent | [AGENTS.md](AGENTS.md), then [agent onboarding](docs/agent-guide.md) |
 | Coordinate implementation agents | [Agent collaboration](docs/agent-collaboration.md) |
+| Build cut review and version comparison | [Approved staged design](docs/REVIEW-CUT-DESIGN.md) |
 | Understand the system | [Architecture](docs/architecture.md) and [domain model](docs/domain-model.md) |
 | Choose where a change belongs | [Repository map](docs/repositories.md) |
 | Release or deploy | [Deployment runbook](docs/deployment.md) |
