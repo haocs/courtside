@@ -26,6 +26,8 @@ The processing server and viewing website are independent services and databases
 
 Study exports have distinct purposes. A coaching preparation produces sampled evidence for a separately requested AI review; a sharing download produces a higher-quality video artifact without starting AI or extracting coaching frames. Both use the website's media-render role and declared artifact storage, not the video-processing queue. The selected interval, crop and speed are frozen in each job. A sharing export is neither a new serving Video version nor coaching evidence.
 
+Player learning plans use the existing coaching AI role with a distinct `learning_plan` purpose and `learning-plan-v1` capability. They summarize a bounded, explicitly requested snapshot of prior coaching and user-reported practice progress; they do not render media or create a serving Moment. No background provider calls or extra video-processing queue are involved. Plan activation, revisions, coverage and practice logs share the coaching database so completion is atomic. See [the learning-plan contract](https://github.com/haocs/tennis-web/blob/main/docs/LEARNING-PLAN.md).
+
 The current website reads published manifests and processing status metadata. It is **not** a general client of an already-built research registry in the processing server. That registry and a future comparison/evaluation control plane remain proposals.
 
 ## Responsibility and write boundary

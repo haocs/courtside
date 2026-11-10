@@ -35,6 +35,12 @@ Retain the selected source-time interval, frame/snapshot mapping, crop/zoom/spee
 
 Serving edits enter an accepted evaluation dataset only through an explicit review/export/freeze decision. Keep model predictions, AI suggestions, human edits and benchmark truth distinguishable. Reprocessing must not relabel an old cut report as feedback on a new cut.
 
+## Player learning plans and practice
+
+A learning plan is a player-level synthesis with an active revision and retained history, rather than a Moment or a processing annotation. Citations preserve the reviewed evidence revision and original-time anchor. A changed or reprocessed Clip must not silently change that evidence. AI proposals remain distinguishable from human-confirmed observations.
+
+Practice items have stable server identities and append-only progress revisions. A user reporting practice is not proof of observed skill or mastery. Model updates preserve those user edits; malformed or stale completions remain audit records without replacing the active plan or advancing its coverage. Coverage records what evidence was actually supplied, not every item available to the player. See [the owner contract](https://github.com/haocs/tennis-web/blob/main/docs/LEARNING-PLAN.md).
+
 ## Names that predate this model
 
 Legacy `/api/sessions` and `metadata/sessions` names can refer to per-recording Videos; practice/session APIs represent actual Sessions. Raw publisher Clip IDs can remain URL parameters, while serving Clip entity IDs include the publication version. Inspect the exact component contract before changing identity or like migration behavior.
