@@ -68,3 +68,7 @@ The NAS coordinates and stores. Heavy video inference/rendering and any future m
 Optional player diagnostics reuse that detector's results. Person boxes, confidence and estimated box movement are playback diagnostics, not a tennis-play or swing classifier. They do not create processing annotations or accepted labels.
 
 Keep originals, served artifacts, coaching artifacts and mutable application state separate even when they share a physical NAS.
+
+## Unreleased cut-review integration
+
+The [cut-review implementation](CUT-REVIEW-IMPLEMENTATION.md) adds a metadata-only website-to-processing-server bridge for explicit feedback snapshots, candidate reruns, catalog lookup and retention pins. Large artifacts still move through storage. Staging a candidate makes its derived media eligible for read-only website comparison without changing the serving manifest. This describes the reviewed feature branches, not a change already made to the running system.
