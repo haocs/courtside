@@ -50,6 +50,6 @@ Normal Mac Local Network permissions and the named native launcher can matter fo
 
 Check the configured mount identity before accepting a newly created local directory as the NAS. The video worker should upload results once into staging; server activation renames on the same filesystem. Avoid unnecessary round trips or recopying whole recordings for metadata-only work.
 
-Local dryrun scratch cleanup is planned, not an automatically safe command. Experimental TTL/pins/garbage collection are also proposed research features. Preserve originals, current serving/rollback results, active/recovery task files, immutable labels/history and pinned coaching evidence. Any deletion needs a real ownership/reference/retention decision; age alone is insufficient.
+Local dryrun scratch cleanup is planned, not an automatically safe command. Candidate TTL, independent reference pins and fenced garbage collection are implemented; automatic cleanup remains disabled by default. See the [released cut-review contracts](CUT-REVIEW-IMPLEMENTATION.md) before enabling retention cleanup. Preserve originals, current serving/rollback results, active/recovery task files, immutable labels/history and pinned coaching evidence. Any deletion needs a real ownership/reference/retention decision; age alone is insufficient.
 
 See [deployment](deployment.md) for complete state backup/restore and [privacy](privacy.md) before sharing diagnostics.
