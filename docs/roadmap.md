@@ -5,7 +5,7 @@ Current implementations and the lab's proposed milestones must be tracked separa
 | Area | Working now | Next work / owner |
 | --- | --- | --- |
 | Review and serving metadata | Sessions, Videos/versions, Clips, Moments, coaching reviews and output-bound usefulness | Improve feedback/inspection ergonomics in tennis-web as requested; preserve current identities and history. |
-| Processing execution | Lease-based process/dryrun/experiment tasks, checkpoints, timings and separate activation | Per-clip resume, verified Windows service/HDR support and measured bounded parallelism in worker/server. |
+| Processing execution | Lease-based process/dryrun/experiment tasks, checkpoints, timings, separate activation, and Worker Portal visibility across video, AI coach, learning plan, and clip-interval export tasks | **TODO**: standardize structured, secret- and path-redacted failure error logging/reporting from video, render, and AI workers into the Worker Portal; per-clip resume, verified Windows service/HDR support and measured bounded parallelism in worker/server. |
 | Feedback for detector improvement | User-facing processing/cut feedback and serving annotations exist | Freeze a research export/acceptance contract across web, server and lab. UI feedback is not benchmark truth. |
 | Benchmark | Scoring, labeling and split design documented | Build a reviewed private benchmark release, reproduce the exact baseline and implement scoring in the lab. |
 | Feature reuse | Current detector/executor provides a baseline | Implement versioned observations/features and prediction-only experiments before rendering every candidate. |

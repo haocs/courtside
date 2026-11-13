@@ -22,7 +22,7 @@ When an upload does not process, check server watcher/scans, stable input discov
 
 ## Server and publication
 
-Use the processing portal for task/attempt/stage inspection, watcher scan/enable state and worker pause/resume. Exact routes, desired-version semantics and retry behavior are in the [API](https://github.com/haocs/tennis-processing-server/blob/main/docs/API.md).
+Use the **Worker Portal** (`tennis-processing-server`) for low-level task/attempt/stage inspection, watcher scan/enable state, worker pause/resume, and unified visibility across video tasks and mirrored website worker tasks (`ai_coach`, `learning_plan`, `clip_interval_export`, and `coaching_excerpt_render`). Keep Courtside's `/processing` **Processing Room** focused on end-user readiness, default AI model selection, and cut-review entry points. Exact server routes, desired-version semantics and retry behavior are in the [API](https://github.com/haocs/tennis-processing-server/blob/main/docs/API.md).
 
 Pause affects future assignment; cancellation is cooperative. Retry/rerun is not the same as activating a result. Manual reruns should remain unpublished until reviewed. Never repair a stuck task by editing queue/database rows directly or treating a stale local lease as current ownership.
 
@@ -53,3 +53,7 @@ Check the configured mount identity before accepting a newly created local direc
 Local dryrun scratch cleanup is planned, not an automatically safe command. Candidate TTL, independent reference pins and fenced garbage collection are implemented; automatic cleanup remains disabled by default. See the [released cut-review contracts](CUT-REVIEW-IMPLEMENTATION.md) before enabling retention cleanup. Preserve originals, current serving/rollback results, active/recovery task files, immutable labels/history and pinned coaching evidence. Any deletion needs a real ownership/reference/retention decision; age alone is insufficient.
 
 See [deployment](deployment.md) for complete state backup/restore and [privacy](privacy.md) before sharing diagnostics.
+
+## TODO
+
+- **Worker failure error logging**: Update video, render, and AI coaching workers to consistently capture and send back structured, secret- and path-redacted failure details (`error_code`, concise `error`, and bounded `error_detail`) whenever a task fails so the Worker Portal persists and displays clear failure causes without exposing tokens, prompts, answers, or local host paths.
