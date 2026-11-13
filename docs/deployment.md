@@ -70,6 +70,10 @@ Set the reviewed digest through that project's existing private image setting fi
 
 In Synology Container Manager, update the image-only project settings and use its normal deploy/update operation. Some DSM versions label this **Build** even for an `image:`-only project. Confirm the selected project and read its operation result. Never substitute **Clean**, Delete, volume removal, or a broad prune for a normal update. Enabling SSH or changing permissions is not a prerequisite when the existing UI/deployment route is sufficient.
 
+Use separate addresses for browser navigation and service-to-service API traffic. The website's `TENNIS_PROCESSING_ROOM_URL` is the browser-facing Worker Portal address; `TENNIS_PROCESSING_API_URL` can use the processing service's Docker DNS name and internal port over an explicitly shared private network. Keep the network limited to the intended services, preserve existing published ports and filesystem mounts, and do not loosen a LAN reverse-proxy access policy to make container requests pass. When the services use separate Compose projects, declare the existing server network as external in the website project rather than creating a second network with a similar name.
+
+After a routing update, verify `/api/v1/external-tasks` contains the existing coaching, learning-plan and export jobs and `/api/v1/workers` reports their heartbeats. An HTTP 403 in `portal_mirror` logs with an empty external task list is a failed status feed, not evidence that no coaching jobs exist. Keep the execution queues separate; repair their metadata mirror without rerunning provider calls.
+
 Keep the entry point LAN-only. A reverse proxy does not automatically provide DSM visitor identity or per-user file ACL enforcement. Do not expose public ports or add a new identity system as part of an image update.
 
 ## Verify the running result
