@@ -79,3 +79,7 @@ Keep originals, served artifacts, coaching artifacts and mutable application sta
 ## Unreleased cut-review integration
 
 The [cut-review implementation](CUT-REVIEW-IMPLEMENTATION.md) adds a metadata-only website-to-processing-server bridge for explicit feedback snapshots, candidate reruns, catalog lookup and retention pins. Large artifacts still move through storage. Staging a candidate makes its derived media eligible for read-only website comparison without changing the serving manifest. This describes the reviewed feature branches, not a change already made to the running system.
+
+## Unreleased hybrid AI + vision processing
+
+The [hybrid AI + vision design](HYBRID-AI-PROCESSING-DESIGN.md) introduces per-task `parameters.processing_strategy` (`vision_only`, `hybrid_ai_vision`, and reserved `ai_only`), worker-advertised AI provider/model catalogs (`ai_providers`, `ai_models`, `default_ai_model`), and per-request `ai_model`, `allow_model_fallback`, and `ai_tuning` (`aggressiveness`, `accuracy_tier`) selection rather than worker-level model pinning. Under `hybrid_ai_vision`, local pose candidates (`<= 45.0s` spans, caching raw pose separately from derived observations) are verified locally through EXIF-free contact sheets and guarded worker subprocesses before emitting `ai-provenance.json`. This describes the reviewed feature branches, not a change already made to the running system.
