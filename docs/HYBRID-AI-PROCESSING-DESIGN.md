@@ -1,6 +1,6 @@
 # Hybrid AI + Vision Video Processing — Design & API Contracts
 
-- **Status**: Approved (Codex-reviewed on `docs/hybrid-ai-processing-design`)
+- **Status**: Implemented and independently reviewed; processing server v0.4.0 and worker v2.1.0.
 - **Examples**: All recording names, digests, models, worker IDs, URLs and timings are synthetic.
 - **Owning Components**:
   - `tennis-processing-server`: Strategy/tuning/per-task model validation, worker AI model catalog registration, claim/scheduler capability matching, and Worker Portal UI controls.
@@ -90,7 +90,7 @@ New strategy, model-selection, and tuning keys in `parameters`:
 For each candidate `[cand.start_s, cand.end_s]` and validated model response `(action, category, confidence, trimmed_start_s?, trimmed_end_s?)`:
 
 1. **Trim Validity Rules** *(evaluated before applying the decision table)*:
-   - In JSON Schema (`gemini_compatible_schema`-safe), `trimmed_start_s` and `trimmed_end_s` are optional numbers.
+   - The provider wire schema requires `trimmed_start_s` and `trimmed_end_s` as nullable numbers: use null for keep/drop, and finite numbers for trim. This satisfies Codex strict Structured Outputs. The local parser tolerates omitted unused bounds for compatible legacy/custom providers.
    - If `action != "trim"`: ignore `trimmed_start_s`/`trimmed_end_s` even if null/omitted.
    - If `action == "trim"`:
      - Both `trimmed_start_s` and `trimmed_end_s` MUST be present, finite numbers (not `bool`), with `trimmed_start_s < trimmed_end_s`.
@@ -184,7 +184,7 @@ Workers remain installable independently of any IDE/workspace (`courtside/AGENTS
 ### 3.2 Worker Model Probe & Advertisement Payload
 
 When `"ai"` is enabled (`Agent.__init__`), the worker discovers currently usable providers/models:
-1. **`antigravity`**: Resolves `ai.antigravity_bin` or `agy` (`/opt/homebrew/bin/agy`, `/usr/local/bin/agy`) -> runs `agy models` (`timeout=8`) -> parses model IDs (`^[a-z0-9][a-z0-9._-]{1,63}\s{2,}(.+)$`), stripping ANSI/CR escapes and rejecting strings containing `/` or `\`. Adds `{id: "antigravity:<model>", provider: "antigravity", model: "<model>", label: "Antigravity · <display>"}`.
+1. **`antigravity`**: Resolves `ai.antigravity_bin` or `agy` (`/opt/homebrew/bin/agy`, `/usr/local/bin/agy`) -> runs `agy models` (`timeout=8`) -> parses model IDs (`^[a-z0-9][a-z0-9._-]{1,63}(?:\t+| {2,})(.+)$`), stripping ANSI/CR escapes and rejecting strings containing `/` or `\`. Adds `{id: "antigravity:<model>", provider: "antigravity", model: "<model>", label: "Antigravity · <display>"}`.
 2. **`gemini`**: Checks non-empty API key in `ai.gemini_api_key` or `os.environ[gemini_api_key_env]` / `GOOGLE_API_KEY`. Exposes configured `gemini_models` (default `["gemini-2.5-flash", "gemini-2.5-flash-lite"]`) as `gemini:<model>`.
 3. **`codex`**: Resolves `ai.codex_bin` or `codex` -> runs `codex login status` (`timeout=8`, verifying `returncode == 0` and `'ChatGPT'` in output). Exposes configured `codex_models` (default `["default"]`) as `codex:<model>`.
 
@@ -291,7 +291,7 @@ To ensure contact sheets retain sufficient temporal density even for long rallie
    - **Strict Propagation**: `Cancelled` and `LeaseLost` propagate **immediately** out of `_run_provider_batch` -> `run_hybrid_ai_analysis` -> `Agent.execute`. They are **never** treated as fallback-eligible `ProviderCallError` failures and **never** trigger a second provider/model!
 2. **Structured Output Schema**:
    - Batch prompt attaches each candidate's `cand-NNN.jpg` plus compact JSON summary `{candidate_id, start_s, end_s, duration_s, event_count, peak_wrist_speed, active_ratio}`.
-   - Required JSON response keys per decision: `candidate_id`, `action` (`keep|trim|drop`), `category` (`rally|serve|drill|warmup|shadow_swing|ball_pickup|walking|idle|uncertain`), `confidence` (`0..1`), `reason`, and optional `trimmed_start_s`, `trimmed_end_s` (validated strictly in code per §2.2.C).
+   - Required JSON response keys per decision: `candidate_id`, `action` (`keep|trim|drop`), `category` (`rally|serve|drill|warmup|shadow_swing|ball_pickup|walking|idle|uncertain`), `confidence` (`0..1`), `reason`, and nullable `trimmed_start_s`, `trimmed_end_s` (finite numbers required for trim, validated strictly in code per §2.2.C).
    - Exact 1-to-1 `candidate_id` coverage verified (no duplicates, no missing IDs, no unknown IDs).
 
 ### 4.5 Model Chain, Fallback, Empty-Clip Policy & Provenance
@@ -396,3 +396,9 @@ To ensure contact sheets retain sufficient temporal density even for long rallie
 4. **Task Cards & Inspect Run Dialog**:
    - Task cards display a compact strategy/model badge (e.g. `hybrid · gemini-4-hydrogen-low`, `fallback` or `mixed` indicator, and `balanced / standard` tuning summary) alongside status and errors.
    - `#detail` modal displays full `ai_refinement` breakdown including `batch_provenance`, `actual_ai_model`, `ai_tuning`, and candidate keep/trim/drop/uncertain counts.
+
+## Release review: provider compatibility
+
+Worker v2.1.0 uses Antigravity's noninteractive `--print` interface with sandboxing, explicit image references, JSON schema and structured response envelopes; `agy agent` lists agents and is not an inference command. Model discovery accepts tab-separated and space-separated catalogs. Codex receives images plus its prompt through explicit stdin, ignores user tool configuration, disables unrelated tools, and removes API-key environment overrides to preserve ChatGPT subscription authentication. Gemini sends the standard schema through `generationConfig.response_json_schema`. Invalid wrapped JSON remains eligible for the configured fallback chain; cancellation does not. Disabled AI explicitly clears model advertisements.
+
+Independent checks cover synthetic media execution, cancellation/process-group cleanup, strict model pinning and fallback, provider wire formats, bounded provenance, candidate publication constraints, and mobile/desktop operator controls. Real Codex and Antigravity adapter smoke checks used a generated solid-color image only. These verify integration, not accuracy on real tennis footage; reviewed benchmarks remain future work.
