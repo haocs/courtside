@@ -44,3 +44,7 @@ Practice items have stable server identities and append-only progress revisions.
 ## Names that predate this model
 
 Legacy `/api/sessions` and `metadata/sessions` names can refer to per-recording Videos; practice/session APIs represent actual Sessions. Raw publisher Clip IDs can remain URL parameters, while serving Clip entity IDs include the publication version. Inspect the exact component contract before changing identity or like migration behavior.
+
+## Coaching evidence enrichment
+
+Optional `evidence_enrichment` records (for example render-worker pose candidates `POSE_ENRICHMENT_SCHEMA_VERSION = 1`) are anchored to immutable retained evidence manifests (`evidence`) and original-recording `applies_to` intervals. They augment suggestion inspection lazily (`GET /api/coaching/evidence/<id>/pose`) without mutating clip identity, Moment anchors, crop/export recipes, or reprocessing provenance.

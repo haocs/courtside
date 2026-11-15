@@ -31,3 +31,7 @@ Keep these statements separate:
 3. A shared research registry, accepted dataset release flow and evaluation executor need explicit implementation and compatible migration contracts. They are not created by renaming a record or copying an old architecture diagram.
 
 When a cross-project decision changes, update this page, the affected component contract and the proposal/status reference together. Avoid retaining contradictory instructions that would send an agent to a nonexistent endpoint or require a speculative migration.
+
+## Coaching inspection and optional pose boundaries
+
+Coaching suggestion inspection (`tennis-web` `v0.25.0`, `tennis-coach-worker` `0.6.0[pose]`) extends coaching annotations with versioned optional cues (`schema_version: 3`, backward-compatible with `2`) and optional worker-side still-frame pose enrichment (`evidence_enrichment`). Pose estimates are treated as approximate visual inspection hints gated by per-joint confidence and player-identity ambiguity — never clinical measurements, fabricated target postures, or benchmark ground truth — and missing or failed pose falls back cleanly to plain evidence frames and text without adding NAS compute or blocking normal coaching exports.
